@@ -1,12 +1,15 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import { trpc } from "../utils/trpc";
 
 type SingleCardProps = {
   test: string;
 };
 
 const Home: NextPage = () => {
+  const hello = trpc.useQuery(["cardmarket.priceguide"]);
+
   return (
     <>
       <Head>
@@ -18,6 +21,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
+        <div className="pt-6 text-2xl text-blue-500 flex justify-center items-center w-full">
+          {hello.data ? <p>{hello.data}</p> : <p>Loading..</p>}
+        </div>
         <div className="grid gap-3 pt-3 mt-3 md:grid-cols-4 lg:w-80%">
           <SingleCard test="test" />
           <SingleCard test="test" />
