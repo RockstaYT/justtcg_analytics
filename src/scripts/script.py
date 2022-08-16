@@ -1,11 +1,14 @@
+import mysql.connector
+import os
 import json
 import base64
 import zlib
 import csv
-from datetime import datetime
 import os.path
 from pymkm.pymkmapi import PyMkmApi
 from pymkm.pymkm_helper import PyMkmHelper, timeit
+from datetime import datetime
+from dotenv import load_dotenv
 
 
 # Check if config file is found. If so open it and read it into a var for later use
@@ -37,7 +40,7 @@ def __read_product_file():
     with open(productFilePath, 'r') as csvfile:
         reader = csv.reader(csvfile)
         for row in reader:
-            if("Magic" in row[3]):
+            if("Magic Single" in row[3]):
                 product_list.append(row)
 
     return product_list
@@ -53,9 +56,22 @@ def __download_product_file():
     f.close()
 
 
-if (os.path.isfile(productFilePath) == False):
+"""  if (os.path.isfile(productFilePath) == False):
     __download_product_file()
 
 product_list = __read_product_file()
 
-print(product_list)
+print(product_list)"""
+
+
+load_dotenv()
+
+
+connection = mysql.connector.connect(
+    host=os.getenv("HOST"),
+    user=os.getenv("USERNAME"),
+    passwd=os.getenv("PASSWORD"),
+    db=os.getenv("DATABASE")
+)
+
+connection.close()
