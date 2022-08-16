@@ -40,4 +40,4 @@ yarn-error.log*
 *.tsbuildinfo
 
 # product and price files
-/src/srcipts/product_files
+./src/srcipts/product_files
